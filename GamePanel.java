@@ -178,35 +178,35 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     }
 
     public void remove_obstacles() {
+        int old_score = score;
+        
         if (obstacles_lane_1.size() > 0 && obstacles_lane_1.get(0) > 600) {
             obstacles_lane_1.remove(0);
-            playSound("assets/score.wav");
             score++;
         }
 
         if (obstacles_lane_2.size() > 0 && obstacles_lane_2.get(0) > 600) {
             obstacles_lane_2.remove(0);
-            playSound("assets/score.wav");
             score++;
         }
 
         if (obstacles_lane_3.size() > 0 && obstacles_lane_3.get(0) > 600) {
             obstacles_lane_3.remove(0);
-            playSound("assets/score.wav");
             score++;
         }
 
         if (obstacles_lane_4.size() > 0 && obstacles_lane_4.get(0) > 600) {
             obstacles_lane_4.remove(0);
-            playSound("assets/score.wav");
             score++;
         }
 
         if (obstacles_lane_5.size() > 0 && obstacles_lane_5.get(0) > 600) {
             obstacles_lane_5.remove(0);
-            playSound("assets/score.wav");
             score++;
         }
+        
+        if(old_score < score)
+            playSound("assets/score.wav");
     }
 
     public void check_collision() {
