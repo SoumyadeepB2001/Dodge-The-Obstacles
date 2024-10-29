@@ -22,6 +22,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     Image road; // 500 x 600 i.e. same as our Game Panel
     int panelWidth, panelHeight;
     int player_x_coord, player_y_coord;
+    boolean gameOver = false;
     Timer timer;
     int x_lane[] = { 37, 137, 237, 337, 437 };
     int obstacle_velocity = 2;
@@ -59,6 +60,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         super.paint(g); // paint background
         // Graphics2D g2D = (Graphics2D) g;
         g.drawImage(road, 0, 0, null);
+
+        if (gameOver)
+            car_player = new ImageIcon("assets/explosion.png").getImage();
+
         g.drawImage(car_player, player_x_coord, player_y_coord, null);
 
         int no_of_obstacles_lane1 = obstacles_lane_1.size();
@@ -240,7 +245,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     }
 
     private void endGame() {
+
+        if (gameOver) //This line stops other gameOver calls from executing because there are always some calls left in the call stack
+            return;
+
         timer.stop();
+        gameOver = true;
+        playSound("assets/explosion.wav");
+        repaint();
+
         JOptionPane.showMessageDialog(null, "Game Over! \n Score: " + score);
         System.exit(0);
     }
