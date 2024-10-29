@@ -1,9 +1,16 @@
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -168,26 +175,31 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     public void remove_obstacles() {
         if (obstacles_lane_1.size() > 0 && obstacles_lane_1.get(0) > 600) {
             obstacles_lane_1.remove(0);
+            playSound("assets/score.wav");
             score++;
         }
 
         if (obstacles_lane_2.size() > 0 && obstacles_lane_2.get(0) > 600) {
             obstacles_lane_2.remove(0);
+            playSound("assets/score.wav");
             score++;
         }
 
         if (obstacles_lane_3.size() > 0 && obstacles_lane_3.get(0) > 600) {
             obstacles_lane_3.remove(0);
+            playSound("assets/score.wav");
             score++;
         }
 
         if (obstacles_lane_4.size() > 0 && obstacles_lane_4.get(0) > 600) {
             obstacles_lane_4.remove(0);
+            playSound("assets/score.wav");
             score++;
         }
 
         if (obstacles_lane_5.size() > 0 && obstacles_lane_5.get(0) > 600) {
             obstacles_lane_5.remove(0);
+            playSound("assets/score.wav");
             score++;
         }
     }
@@ -231,5 +243,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         timer.stop();
         JOptionPane.showMessageDialog(null, "Game Over! \n Score: " + score);
         System.exit(0);
+    }
+
+    public void playSound(String soundFileName) {
+        try {
+            // Load the sound file
+            File soundFile = new File(soundFileName);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+
+            // Get a clip resource
+            Clip clip = AudioSystem.getClip();
+
+            // Open the audio stream and start playing it
+            clip.open(audioStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 }
